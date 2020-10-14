@@ -1,7 +1,39 @@
-<?php include('header.php'); ?>
-<?php include('sidebar.php'); ?>
+
+<?php
+include('config.php');
+include('header.php');
+include('sidebar.php');
+ 
+if(isset($_POST['submit'])){
+	$name=isset($_POST['name']) ? $_POST['name'] : '';
+	$price=isset($_POST['price'])?$_POST['price']:'';
+	//$imagename=isset($_POST['file'])?$_FILES['file']['name']:'';
+	$category=$_POST['category'];
+	//$tags=$_POST['tags'];
+	$imagename=$_FILES['file']['name'];
+	$description=isset($_POST['description'])?$_POST['description']:'';
+	$filetempname=$_FILES['file']['tmp_name'];
+	$imagedestination='uploads/'.$imagename;
+	move_uploaded_file($filetempname,$imagedestination);
+	//accessing each tag
+	// $tag="";
+	// foreach($tags as $t){
+	// 	$tag.= $t;
+	// }
+	
+
+	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$description.'")';
+        if ($conn->query($sql) === TRUE) {
+			$message="New record created successfully";
+        } else {
+            $errors=array('input'=>'form','msg'=>$conn->error);
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }        
+       
+		}			
+	
+?>
 		<div id="main-content"> <!-- Main Content Section with everything -->
-			
 			<noscript> <!-- Show a notification if the user has disabled javascript -->
 				<div class="notification error png_bg">
 					<div>
@@ -12,11 +44,13 @@
 			
 			<!-- Page Head -->
 			<h2>Welcome John</h2>
+			
 			<p id="page-intro">What would you like to do?</p>
 	
 			<div class="clear"></div> <!-- End .clear -->
-			
+
 			<div class="content-box"><!-- Start Content Box -->
+				
 				
 				<div class="content-box-header">
 					
@@ -47,11 +81,13 @@
 							<thead>
 								<tr>
 								   <th><input class="check-all" type="checkbox" /></th>
-								   <th>Column 1</th>
-								   <th>Column 2</th>
-								   <th>Column 3</th>
-								   <th>Column 4</th>
-								   <th>Column 5</th>
+								   <th>Image</th>
+								   <th>Name</th>
+								   <th>Product-ID</th>
+								   <th>Price</th>
+								   <th>Category</th>
+								   <th>Description</th>
+								   <th>Action</th>
 								</tr>
 								
 							</thead>
@@ -82,117 +118,30 @@
 							</tfoot>
 						 
 							<tbody>
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
+
+								<?php
+									$sql = "SELECT * FROM products";
+									$result = $conn->query($sql);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											
+											echo '<tr><td><input type="checkbox" /></td>';
+											echo '<td><img src="uploads/'.$row["image"].'"height="50" width="50"> </td>';	
+											echo "<td>".$row["name"]."</td>";
+											echo "<td>".$row["product_id"]."</td>";
+											echo "<td>".$row["price"]."</td>";
+											echo "<td>".$row["category"]."</td>";
+											echo "<td>".$row["description"]."</td>";
+											echo "<td>";
+											echo '<a href="updateproduct.php?name='.$row["name"].'&price='.$row["price"].'&category='.$row["category"].'&description='.$row["description"].'&product_id='.$row["product_id"].'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>';
+										 	echo '<a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a>';
+											echo "</td></tr>";
+										}
+									} else {
+										echo "0 results";
+									}
+								?>
 							</tbody>
 							
 						</table>
@@ -201,54 +150,54 @@
 					
 					<div class="tab-content" id="tab2">
 					
-						<form action="#" method="post">
-							
+						<form action="" method="POST" enctype="multipart/form-data">
+						
 							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
-								
+							
 								<p>
-									<label>Small form input</label>
-										<input class="text-input small-input" type="text" id="small-input" name="small-input" /> <span class="input-notification success png_bg">Successful message</span> <!-- Classes for input-notification: success, error, information, attention -->
-										<br /><small>A small description of the field</small>
+									<label>Name</label>
+									<input class="text-input medium-input" type="text" id="name" name="name" /> <span class="input-notification success png_bg">Successful message</span> <!-- Classes for input-notification: success, error, information, attention -->
+									<br /><small>Enter your name here</small>
 								</p>
 								
 								<p>
-									<label>Medium form input</label>
-									<input class="text-input medium-input datepicker" type="text" id="medium-input" name="medium-input" /> <span class="input-notification error png_bg">Error message</span>
+									<label>Price</label>
+									<input class="text-input small-input " type="text" id="price" name="price" /> <span class="input-notification error png_bg">Error message</span>   <!--datepicker-->
 								</p>
 								
 								<p>
-									<label>Large form input</label>
-									<input class="text-input large-input" type="text" id="large-input" name="large-input" />
+									<label>Image</label>
+									<input type="file" name="file" id="file" accept="image/*">
 								</p>
 								
 								<p>
-									<label>Checkboxes</label>
-									<input type="checkbox" name="checkbox1" /> This is a checkbox <input type="checkbox" name="checkbox2" /> And this is another checkbox
-								</p>
-								
-								<p>
-									<label>Radio buttons</label>
-									<input type="radio" name="radio1" /> This is a radio button<br />
-									<input type="radio" name="radio2" /> This is another radio button
-								</p>
-								
-								<p>
-									<label>This is a drop down list</label>              
-									<select name="dropdown" class="small-input">
-										<option value="option1">Option 1</option>
-										<option value="option2">Option 2</option>
-										<option value="option3">Option 3</option>
-										<option value="option4">Option 4</option>
+									<label>Category</label>              
+									<select name="category" class="small-input">
+										<option value="Men">Men</option>
+										<option value="Women">Women</option>
+										<option value="Kids">Kids</option>
+										<option value="Electronics">Electronics</option>				
+										<option value="Sports">Sports</option>
 									</select> 
 								</p>
-								
+
 								<p>
-									<label>Textarea with WYSIWYG</label>
-									<textarea class="text-input textarea wysiwyg" id="textarea" name="textfield" cols="79" rows="15"></textarea>
+									<label>Tags</label>
+									<input type="checkbox" name="tags[]" /> Fashion
+									<input type="checkbox" name="tags[]" /> Ecommerce
+									<input type="checkbox" name="tags[]" /> Shop
+									<input type="checkbox" name="tags[]" /> HandBag
+									<input type="checkbox" name="tags[]" /> Laptop
+									<input type="checkbox" name="tags[]" /> Headphone
+								</p>
+																
+								<p>
+									<label>Description</label>
+									<textarea class="text-input textarea wysiwyg" id="description" name="description" cols="79" rows="15"></textarea>
 								</p>
 								
 								<p>
-									<input class="button" type="submit" value="Submit" />
+									<input class="button" type="submit" name="submit" value="Submit" />
 								</p>
 								
 							</fieldset>
@@ -264,7 +213,7 @@
 			</div> <!-- End .content-box -->
 
 			<div class="clear"></div>
-			
+
 			
 			<!-- Start Notifications -->
 			<!--

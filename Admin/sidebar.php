@@ -2,7 +2,7 @@
     <div id="sidebar-wrapper"> <!-- Sidebar with logo and menu -->
         <?php
             $filename=basename($_SERVER['REQUEST_URI']);
-            echo($filename);
+            //echo($filename);
             $productmenu=array("products.php","categories.php","tags.php");
         ?>	
 			
