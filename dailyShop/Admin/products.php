@@ -8,7 +8,7 @@ if(isset($_POST['submit'])){
 	$name=isset($_POST['name']) ? $_POST['name'] : '';
 	$price=isset($_POST['price'])?$_POST['price']:'';
 	//$imagename=isset($_POST['file'])?$_FILES['file']['name']:'';
-	$category=$_POST['category'];
+	$category=isset($_POST['category'])?$_POST['category']:'';
 	//$tags=$_POST['tags'];
 	$imagename=$_FILES['file']['name'];
 	$description=isset($_POST['description'])?$_POST['description']:'';
@@ -16,13 +16,11 @@ if(isset($_POST['submit'])){
 	$imagedestination='uploads/'.$imagename;
 	move_uploaded_file($filetempname,$imagedestination);
 	//accessing each tag
-	// $tag="";
-	// foreach($tags as $t){
-	// 	$tag.= $t;
-	// }
+	$tag=implode(',',$_POST['tags']);
+	
 	
 
-	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$description.'")';
+	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`tags`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$tag.'","'.$description.'")';
         if ($conn->query($sql) === TRUE) {
 			$message="New record created successfully";
         } else {
@@ -86,6 +84,7 @@ if(isset($_POST['submit'])){
 								   <th>Product-ID</th>
 								   <th>Price</th>
 								   <th>Category</th>
+								   <th>Tags</th>
 								   <th>Description</th>
 								   <th>Action</th>
 								</tr>
@@ -132,6 +131,7 @@ if(isset($_POST['submit'])){
 											echo "<td>".$row["product_id"]."</td>";
 											echo "<td>".$row["price"]."</td>";
 											echo "<td>".$row["category"]."</td>";
+											echo "<td>".$row["tags"]."</td>";
 											echo "<td>".$row["description"]."</td>";
 											echo "<td>";
 											echo '<a href="updateproduct.php?name='.$row["name"].'&price='.$row["price"].'&category='.$row["category"].'&description='.$row["description"].'&product_id='.$row["product_id"].'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>';
@@ -183,12 +183,12 @@ if(isset($_POST['submit'])){
 
 								<p>
 									<label>Tags</label>
-									<input type="checkbox" name="tags[]" /> Fashion
-									<input type="checkbox" name="tags[]" /> Ecommerce
-									<input type="checkbox" name="tags[]" /> Shop
-									<input type="checkbox" name="tags[]" /> HandBag
-									<input type="checkbox" name="tags[]" /> Laptop
-									<input type="checkbox" name="tags[]" /> Headphone
+									<input type="checkbox" name="tags[]" value="Fashion"/> Fashion
+									<input type="checkbox" name="tags[]" value="Ecommerce"/> Ecommerce
+									<input type="checkbox" name="tags[]" value="Shop"/> Shop
+									<input type="checkbox" name="tags[]" value="HandBag"/> HandBag
+									<input type="checkbox" name="tags[]" value="Laptop"/> Laptop
+									<input type="checkbox" name="tags[]" value="Headphone"/> Headphone
 								</p>
 																
 								<p>
