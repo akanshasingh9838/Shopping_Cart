@@ -135,7 +135,7 @@ if(isset($_POST['submit'])){
 											echo "<td>".$row["description"]."</td>";
 											echo "<td>";
 											echo '<a href="updateproduct.php?name='.$row["name"].'&price='.$row["price"].'&category='.$row["category"].'&description='.$row["description"].'&product_id='.$row["product_id"].'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>';
-										 	echo '<a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a>';
+										 	echo '<a href="deleteproduct.php?product_id='.$row["product_id"].'" onclick="return checkdelete()" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a>';
 											echo "</td></tr>";
 										}
 									} else {
@@ -214,7 +214,11 @@ if(isset($_POST['submit'])){
 
 			<div class="clear"></div>
 
-			
+			<script>
+				function checkdelete(){
+					return confirm("Are you sure you want to delete this data??")
+				}
+			</script>
 			<!-- Start Notifications -->
 			<!--
 			<div class="notification attention png_bg">
