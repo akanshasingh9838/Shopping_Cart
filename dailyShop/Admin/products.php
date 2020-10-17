@@ -170,27 +170,44 @@ if(isset($_POST['submit'])){
 									<input type="file" name="file" id="file" accept="image/*">
 								</p>
 								
-								<p>
-									<label>Category</label>              
-									<select name="category" class="small-input">
-										<option value="Men">Men</option>
-										<option value="Women">Women</option>
-										<option value="Kids">Kids</option>
-										<option value="Electronics">Electronics</option>				
-										<option value="Sports">Sports</option>
+								<p>	
+										<label>Category</label>         
+										<select name="category" class="small-input">		
+									<?php																				
+										$cat_sql = "SELECT `name` FROM categories";
+										$result = $conn->query($cat_sql);
+										
+										if ($result->num_rows > 0) {
+										  // output data of each row
+										  while($row = $result->fetch_assoc()) {
+											echo '<option value="'.$row["name"].'">'.$row["name"].'</option>';
+											
+										  }
+										} else {
+										  echo "0 results, Manage categories first";
+										}																		
+									?>
 									</select> 
 								</p>
-
-								<p>
-									<label>Tags</label>
-									<input type="checkbox" name="tags[]" value="Fashion"/> Fashion
-									<input type="checkbox" name="tags[]" value="Ecommerce"/> Ecommerce
-									<input type="checkbox" name="tags[]" value="Shop"/> Shop
-									<input type="checkbox" name="tags[]" value="HandBag"/> HandBag
-									<input type="checkbox" name="tags[]" value="Laptop"/> Laptop
-									<input type="checkbox" name="tags[]" value="Headphone"/> Headphone
+								<p>	
+									<label>Tags</label>         		
+									<?php																				
+										$tag_sql = "SELECT `tag_name` FROM tags";
+										$result = $conn->query($tag_sql);
+										
+										if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											echo '<input type="checkbox" name="tags[]" value="'.$row["tag_name"].'"/> '.$row["tag_name"];
+											
+										}
+										} else {
+										echo "0 results, Manage tags first";
+										}																		
+									?>
+									
 								</p>
-																
+									
 								<p>
 									<label>Description</label>
 									<textarea class="text-input textarea wysiwyg" id="description" name="description" cols="79" rows="15"></textarea>
