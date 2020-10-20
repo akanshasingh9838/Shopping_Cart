@@ -2,7 +2,7 @@
 <?php
 include('config.php');
 include('header.php');
-//include('sidebar.php');
+include('sidebar.php');
  
 if(isset($_POST['submit'])){
 	$name=isset($_POST['name']) ? $_POST['name'] : '';
@@ -16,7 +16,7 @@ if(isset($_POST['submit'])){
 	$imagedestination='uploads/'.$imagename;
 	move_uploaded_file($filetempname,$imagedestination);
 	//accessing each tag
-	$tag=implode(',', $_POST['tags']);
+	$tag=implode(",", $_POST['tags']);
 	
 	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`tags`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$tag.'","'.$description.'")';
         if ($conn->query($sql) === TRUE) {
@@ -28,7 +28,23 @@ if(isset($_POST['submit'])){
         }        
        
 	}			
-	
+
+if(isset($_GET['product_id']))
+{
+	$id=$_GET['product_id'];
+	echo $_GET['product_id'];
+
+	$sql = "DELETE FROM products WHERE `product_id`='$id'";
+
+	if ($conn->query($sql) === TRUE) {
+	echo "Record deleted successfully";
+	} else {
+	echo "Error deleting record: " . $conn->error;
+	}
+
+}
+
+
 ?>
 		<div id="main-content"> <!-- Main Content Section with everything -->
 			<noscript> <!-- Show a notification if the user has disabled javascript -->
@@ -134,7 +150,7 @@ if(isset($_POST['submit'])){
 											echo "<td>".$row["description"]."</td>";
 											echo "<td>";
 											echo '<a href="updateproduct.php?name='.$row["name"].'&price='.$row["price"].'&category='.$row["category"].'&description='.$row["description"].'&product_id='.$row["product_id"].'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>';
-										 	echo '<a href="deleteproduct.php?product_id='.$row["product_id"].'" onclick="return checkdelete()" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a>';
+										 	echo '<a href="products.php?product_id='.$row["product_id"].'" onclick="return checkdelete()" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a>';
 											echo "</td></tr>";
 										}
 									} else {
