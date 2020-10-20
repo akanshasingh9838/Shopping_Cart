@@ -404,11 +404,47 @@
                     if(mysqli_num_rows($res)>0)
                     {
                         //echo("Data received");
-                        while($row = $res->fetch_assoc()) {
+                        while($row = $res->fetch_assoc())
+                         {
+  
+                          echo '<li>';
+                          echo '<figure>';
+                         
+                          echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                          echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
+                          echo '<figcaption>';
+                          echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
+                          echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
+                          echo '<p class="aa-product-descrip">'.$row["description"].'</p>';
+                          echo ' </figcaption>';
+                          echo ' </figure> ';
+                          echo '<div class="aa-product-hvr-content">';
+                          echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>';
+                          echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>';
+                          echo '<a href="#" class="" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal" ><span class="fa fa-search search" data-id="'.$row["product_id"].'"></span></a>';                           
+                          echo '</div>';
+                        //product badge
+                          echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
+                          echo '</li>';        
+                          }
+                      }
+                  }
+                  
+                  //This work when we choose tags
+                  else if (isset($_GET['tag']))
+                  {
+                    $tag=$_GET['tag'];
+                    $sql="SELECT * FROM products WHERE `tags` LIKE '%$tag%' limit $start,$per_page";
+                    $res=mysqli_query($conn,$sql);
+                    if(mysqli_num_rows($res)>0)
+                    {
+                        //echo("Data received");
+                        while($row = $res->fetch_assoc())
+                         {
   
                             echo '<li>';
                             echo '<figure>';
-                            echo '<a class="aa-product-img" href="#"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                            echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
                             echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                             echo '<figcaption>';
                             echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
@@ -425,13 +461,12 @@
                             echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
                             echo '</li>';        
                           }
-                     }
+                      }
                   }
-
+                  
                   // This work when we do not choose any filter
                   else
                   {
-                    
                         $sql="SELECT * FROM products limit $start,$per_page";
                         $res=mysqli_query($conn,$sql);
                         if(mysqli_num_rows($res)>0)
@@ -441,7 +476,7 @@
 
                                 echo '<li>';
                                 echo '<figure>';
-                                echo '<a class="aa-product-img" href="#"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                                echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
                                 echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                                 echo '<figcaption>';
                                 echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
@@ -612,10 +647,11 @@
               <h3>Tags</h3>
               <div class="tag-cloud">
               <?php
-                  $sql="SELECT DISTINCT tag_name FROM tags ORDER BY tag_name";
+                  $sql="SELECT DISTINCT(tag_name) FROM tags ORDER BY tag_name";
                   $result = $conn->query($sql);
                   while($row=$result->fetch_assoc()){
-                    echo '<a href="tag.php?tag='.$row["tag_name"].'">'.$row["tag_name"].'</a>';
+                    echo '<a href="product.php?tag='.$row["tag_name"].'">'.$row["tag_name"].'</a>';
+                    // echo '<a href="product-detail.php">'.$row["tag_name"].'</a>';
                   }
                 ?>
                 <!-- <a href="#">Fashion</a>
