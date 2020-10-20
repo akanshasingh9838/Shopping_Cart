@@ -1,11 +1,7 @@
 <?php
   include("Admin/config.php");
   include("ajax/functions.php");
-  if(isset($_GET['cat']))
-
-  {
-   
-  }
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -381,7 +377,7 @@
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg">
                <!-- start single product item -->
-  
+
                <?php
                if(isset($_GET['page'])){
                  $page=$_GET['page'];
@@ -398,40 +394,81 @@
                   $per_page=10;
                   $no_of_page=ceil($count/$per_page);
                   $start=($page-1)*$per_page;
-                  $sql="SELECT * FROM products limit $start,$per_page";
-                  $res=mysqli_query($conn,$sql);
-                  if(mysqli_num_rows($res)>0)
+
+                  // This condirtion works when we choose any category
+                  if (isset($_GET['cat']))
                   {
-                      //echo("Data received");
-                      while($row = $res->fetch_assoc()) {
-
-                          echo '<li>';
-                          echo '<figure>';
-                          echo '<a class="aa-product-img" href="#"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
-                          echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
-                          echo '<figcaption>';
-                          echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
-                          echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
-                          echo '<p class="aa-product-descrip">'.$row["description"].'</p>';
-                          echo ' </figcaption>';
-                          echo ' </figure> ';
-                          echo '<div class="aa-product-hvr-content">';
-                          echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>';
-                          echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>';
-                          echo '<a href="#" class="" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal" ><span class="fa fa-search search" data-id="'.$row["product_id"].'"></span></a>';                           
-                          echo '</div>';
-                        //product badge
-                          echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
-                          echo '</li>';        
-                        }
-
+                    $cat=$_GET['cat'];
+                    $sql="SELECT * FROM products WHERE `category`='$cat' limit $start,$per_page";
+                    $res=mysqli_query($conn,$sql);
+                    if(mysqli_num_rows($res)>0)
+                    {
+                        //echo("Data received");
+                        while($row = $res->fetch_assoc()) {
+  
+                            echo '<li>';
+                            echo '<figure>';
+                            echo '<a class="aa-product-img" href="#"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                            echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
+                            echo '<figcaption>';
+                            echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
+                            echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
+                            echo '<p class="aa-product-descrip">'.$row["description"].'</p>';
+                            echo ' </figcaption>';
+                            echo ' </figure> ';
+                            echo '<div class="aa-product-hvr-content">';
+                            echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>';
+                            echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>';
+                            echo '<a href="#" class="" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal" ><span class="fa fa-search search" data-id="'.$row["product_id"].'"></span></a>';                           
+                            echo '</div>';
+                          //product badge
+                            echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
+                            echo '</li>';        
+                          }
+                     }
                   }
+
+                  // This work when we do not choose any filter
                   else
                   {
-                    header("Location:product.php?page=1");
-                  }
+                    
+                        $sql="SELECT * FROM products limit $start,$per_page";
+                        $res=mysqli_query($conn,$sql);
+                        if(mysqli_num_rows($res)>0)
+                        {
+                            //echo("Data received");
+                            while($row = $res->fetch_assoc()) {
 
-              }
+                                echo '<li>';
+                                echo '<figure>';
+                                echo '<a class="aa-product-img" href="#"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                                echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
+                                echo '<figcaption>';
+                                echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
+                                echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
+                                echo '<p class="aa-product-descrip">'.$row["description"].'</p>';
+                                echo ' </figcaption>';
+                                echo ' </figure> ';
+                                echo '<div class="aa-product-hvr-content">';
+                                echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>';
+                                echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>';
+                                echo '<a href="#" class="" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal" ><span class="fa fa-search search" data-id="'.$row["product_id"].'"></span></a>';                           
+                                echo '</div>';
+                              //product badge
+                                echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
+                                echo '</li>';        
+                              }
+
+                        }
+                        else
+                        {
+                          header("Location:product.php?page=1");
+                        }
+                    }
+
+
+
+            }
                    
                ?>
                   
@@ -564,27 +601,30 @@
                   $sql="SELECT DISTINCT category FROM products ORDER BY category";
                   $result = $conn->query($sql);
                   while($row=$result->fetch_assoc()){
-                    echo '<li class="cat"><a href="product.php?cat=$row["category"]>'.$row["category"].'</a></li>';
+                    echo '<li ><a href="product.php?cat='.$row["category"].'">'.$row["category"].'</a></li>';
                   }
-                ?>
-                <!-- <li><a href="#">Men</a></li>
-                <li><a href="">Women</a></li>
-                <li><a href="">Kids</a></li>
-                <li><a href="">Electornics</a></li>
-                <li><a href="">Sports</a></li> -->
+                ?>                
               </ul>
             </div>
+
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
               <h3>Tags</h3>
               <div class="tag-cloud">
-                <a href="#">Fashion</a>
+              <?php
+                  $sql="SELECT DISTINCT tag_name FROM tags ORDER BY tag_name";
+                  $result = $conn->query($sql);
+                  while($row=$result->fetch_assoc()){
+                    echo '<a href="tag.php?tag='.$row["tag_name"].'">'.$row["tag_name"].'</a>';
+                  }
+                ?>
+                <!-- <a href="#">Fashion</a>
                 <a href="#">Ecommerce</a>
                 <a href="#">Shop</a>
                 <a href="#">Hand Bag</a>
                 <a href="#">Laptop</a>
                 <a href="#">Head Phone</a>
-                <a href="#">Pen Drive</a>
+                <a href="#">Pen Drive</a> -->
               </div>
             </div>
             <!-- single sidebar -->
