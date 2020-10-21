@@ -42,6 +42,12 @@
       }
        $_SESSION['cart']=$cart;
        echo count($_SESSION['cart']);
+      //  $row = array(
+      //   'cart_products'=>$_SESSION['cart'],
+      //   'header_no'=>count($_SESSION['cart'])
+      //  );
+      //  echo json_encode(array('cartArray'=>$row));
+
      }
 
     else {

@@ -471,8 +471,10 @@
 
           })
           .done(function( msg ) {
-            // alert("hey" + msg);
-            $('.aa-cart-notify').html(msg);
+              $('.aa-cart-notify').html(msg);
+            // $('.aa-cart-notify').html(msg.cartArray.header_no);
+            // console.log(msg.cartArray.header_no);
+            // console.log(msg.cartArray.cart_products);
            
           });
         });

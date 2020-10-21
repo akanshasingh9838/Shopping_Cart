@@ -13,6 +13,48 @@ if (isset($_GET['id'])) {
       }
     }
 }
+
+$name_array = array();
+$productid_array = array();
+
+if(isset($_GET['order']))
+{
+  if($_GET['order']=='add')
+  {
+    foreach ($_SESSION['cart'] as $key => $value)
+    {
+      $id=$value['id2'];
+      $name=$value['name2'];
+      $price=$value['price2']*$value['quantity2'];
+      array_push($name_array,$name);
+      array_push($productid_array,$id);
+      
+    }
+    $cart_data=implode(',',$name_array);
+    $id_data=implode(',',$productid_array);
+    $datetime=date("Y-m-d h:i:sa");
+    $status="1";
+
+    $sql = "INSERT INTO orders (product_id,cart_data,total,`status`,`datetime`)
+      VALUES ('$id_data','$cart_data','$price','$status','$datetime')";
+    //echo $sql;
+      if ($conn->query($sql) === TRUE) {
+        unset($_SESSION['cart']);
+        // echo "<script>alert('Your order is placed')</script>";
+      ?>
+
+        <script>
+          alert('Order Added');
+          window.location.href = 'product.php';
+        </script>
+<?php
+      } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+      }
+
+  }
+ 
+}
 ?>
 
   <!-- catg header banner section -->
@@ -67,22 +109,6 @@ if (isset($_GET['id'])) {
                       </tr>
                       <?php $totalPrice += $value['price2']*$value['quantity2'] ?>
                       <?php endforeach; ?>
-                      <!-- <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="img/man/polo-shirt-2.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$150</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$150</td>
-                      </tr>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="img/man/polo-shirt-3.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$50</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$50</td>
-                      </tr> -->
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
                           <div class="aa-cart-coupon">
@@ -111,7 +137,7 @@ if (isset($_GET['id'])) {
                    </tr>
                  </tbody>
                </table>
-               <a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+               <a href="cart.php?order=add" class="aa-cart-view-btn">Proced to Checkout</a>
              </div>
            </div>
          </div>

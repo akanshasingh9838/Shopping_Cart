@@ -7,6 +7,17 @@
   // if (!empty($_SESSION['cart'])) {
   //   $total = count($_SESSION['cart']);
   // }
+
+  if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    // echo "<script>alert($id)</script>";
+    foreach ($_SESSION['cart'] as $key => $value) {
+      // echo $value['id2'];
+      if ($id == $value['id2']) {
+          unset($_SESSION['cart'][$key]);
+      }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,12 +160,13 @@
                 <a class="aa-cart-link" href="cart.php">
                   <span class="fa fa-shopping-basket"></span>
                   <span class="aa-cart-title">SHOPPING CART</span>
-                  <span class="aa-cart-notify"></span>
+                  <span class="aa-cart-notify"> </span>
                 </a>
                 <div class="aa-cartbox-summary">
                   <ul>
               
                     <?php $totalPrice = '0'; ?>
+                    <?php if (isset($_SESSION['cart'])) : ?>
                     <?php foreach ($_SESSION['cart'] as $key=>$value) : ?>
                     <li>
                       <a class="aa-cartbox-img" href="#"><img src="Admin/uploads/<?php echo $value['image2'] ?>" alt="img"></a>
@@ -166,14 +178,8 @@
                     </li>
                     <?php $totalPrice += $value['price2']*$value['quantity2']; ?>
                     <?php endforeach; ?>
-                    <!-- <li>
-                      <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
-                      <div class="aa-cartbox-info">
-                        <h4><a href="#">Product Name</a></h4>
-                        <p>1 x $250</p>
-                      </div>
-                      <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                    </li>                     -->
+                    <?php endif; ?>
+                                   
                     <li>
                       <span class="aa-cartbox-total-title">
                         Total
@@ -183,7 +189,7 @@
                       </span>
                     </li>
                   </ul>
-                  <a class="aa-cartbox-checkout aa-primary-btn" href="#">Checkout</a>
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="cart.php">Checkout</a>
                 </div>
               </div>
               <!-- / cart box -->
