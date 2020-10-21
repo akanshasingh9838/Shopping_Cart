@@ -1,10 +1,9 @@
 <?php
   include('dsheader.php');
-  include("Admin/config.php");
-  include("ajax/functions.php");
-  
+  include("Admin/config.php");  
 ?>
- 
+
+
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">
    <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
@@ -333,13 +332,7 @@
                     // echo '<a href="product-detail.php">'.$row["tag_name"].'</a>';
                   }
                 ?>
-                <!-- <a href="#">Fashion</a>
-                <a href="#">Ecommerce</a>
-                <a href="#">Shop</a>
-                <a href="#">Hand Bag</a>
-                <a href="#">Laptop</a>
-                <a href="#">Head Phone</a>
-                <a href="#">Pen Drive</a> -->
+               
               </div>
             </div>
             <!-- single sidebar -->
@@ -442,3 +435,27 @@
   <!-- / product category -->
 
 <?php include('dsfooter.php'); ?>
+
+<script>
+      $(document).ready(function(){
+        $(".search").click(function(){
+          var id=$(this).data('id');
+
+          $.ajax({
+            method:"POST",
+            url:"quick_view.php",
+            data: {id : id},
+            dataType:"json"
+
+          })
+          .done(function( msg ) {
+            $('.qname').html(msg.product.name);
+            $('.qprice').html(msg.product.price);
+            $('.qdesc').html(msg.product.description);
+            $('.simpleLens-lens-image').html('<img src="Admin/uploads/'+msg.product.image+'" height="300" width="250" >')
+            $('.simpleLens-thumbnail-wrapper').html('<img src="Admin/uploads/'+msg.product.image+'" height="70" width="50" >')
+          });
+
+        });
+      });
+</script>
