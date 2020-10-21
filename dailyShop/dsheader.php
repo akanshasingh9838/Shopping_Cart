@@ -1,3 +1,13 @@
+
+ <?php
+  session_start();
+  // $total = '';
+  // // echo count($_SESSION['cart']);
+  
+  // if (!empty($_SESSION['cart'])) {
+  //   $total = count($_SESSION['cart']);
+  // }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,6 +39,8 @@
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,8 +49,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
   </head>
+ 
   <body>
    
    <!-- wpf loader Two -->
@@ -134,35 +146,40 @@
               <!-- / logo  -->
                <!-- cart box -->
               <div class="aa-cartbox">
-                <a class="aa-cart-link" href="#">
+                <a class="aa-cart-link" href="cart.php">
                   <span class="fa fa-shopping-basket"></span>
                   <span class="aa-cart-title">SHOPPING CART</span>
-                  <span class="aa-cart-notify">2</span>
+                  <span class="aa-cart-notify"></span>
                 </a>
                 <div class="aa-cartbox-summary">
                   <ul>
+              
+                    <?php $totalPrice = '0'; ?>
+                    <?php foreach ($_SESSION['cart'] as $key=>$value) : ?>
                     <li>
-                      <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+                      <a class="aa-cartbox-img" href="#"><img src="Admin/uploads/<?php echo $value['image2'] ?>" alt="img"></a>
                       <div class="aa-cartbox-info">
-                        <h4><a href="#">Product Name</a></h4>
-                        <p>1 x $250</p>
+                        <h4><a href="#"><?php echo $value['name2'] ?></a></h4>
+                        <p><?php echo $value['quantity2'] ?> x $<?php echo $value['price2'] ?></p>
                       </div>
                       <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
                     </li>
-                    <li>
+                    <?php $totalPrice += $value['price2']*$value['quantity2']; ?>
+                    <?php endforeach; ?>
+                    <!-- <li>
                       <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#">Product Name</a></h4>
                         <p>1 x $250</p>
                       </div>
                       <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                    </li>                    
+                    </li>                     -->
                     <li>
                       <span class="aa-cartbox-total-title">
                         Total
                       </span>
                       <span class="aa-cartbox-total-price">
-                        $500
+                        $<?php echo $totalPrice; ?>
                       </span>
                     </li>
                   </ul>
@@ -317,5 +334,6 @@
       </div>
     </div>
   </section>
+
   <!-- / menu -->  
  

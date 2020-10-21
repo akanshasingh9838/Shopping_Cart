@@ -1,5 +1,18 @@
 <?php
+//session_start();
 include('dsheader.php');
+include("Admin/config.php");  
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    // echo "<script>alert($id)</script>";
+    foreach ($_SESSION['cart'] as $key => $value) {
+      // echo $value['id2'];
+      if ($id == $value['id2']) {
+          unset($_SESSION['cart'][$key]);
+      }
+    }
+}
 ?>
 
   <!-- catg header banner section -->
@@ -26,6 +39,8 @@ include('dsheader.php');
        <div class="col-md-12">
          <div class="cart-view-area">
            <div class="cart-view-table">
+
+
              <form action="">
                <div class="table-responsive">
                   <table class="table">
@@ -40,15 +55,19 @@ include('dsheader.php');
                       </tr>
                     </thead>
                     <tbody>
+                      <?php $totalPrice; ?>
+                      <?php foreach ($_SESSION['cart'] as $key=>$value) : ?>
                       <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="img/man/polo-shirt-1.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$250</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$250</td>
+                        <td><a class="remove" href="cart.php?id=<?php echo $value['id2'] ?>"><fa class="fa fa-close"></fa></a></td>
+                        <td><a href="#"><img src="Admin/uploads/<?php echo $value['image2']; ?>" alt="img"></a></td>
+                        <td><a class="aa-cart-title" href="#"><?php echo $value['name2']; ?></a></td>
+                        <td>$<?php echo $value['price2']; ?></td>
+                        <td><input class="aa-cart-quantity" type="number" value="<?php echo $value['quantity2']; ?>"></td>
+                        <td>$<?php echo $value['quantity2']*$value['price2']; ?></td>
                       </tr>
-                      <tr>
+                      <?php $totalPrice += $value['price2']*$value['quantity2'] ?>
+                      <?php endforeach; ?>
+                      <!-- <tr>
                         <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
                         <td><a href="#"><img src="img/man/polo-shirt-2.png" alt="img"></a></td>
                         <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
@@ -63,7 +82,7 @@ include('dsheader.php');
                         <td>$50</td>
                         <td><input class="aa-cart-quantity" type="number" value="1"></td>
                         <td>$50</td>
-                      </tr>
+                      </tr> -->
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
                           <div class="aa-cart-coupon">
@@ -84,11 +103,11 @@ include('dsheader.php');
                  <tbody>
                    <tr>
                      <th>Subtotal</th>
-                     <td>$450</td>
+                     <td>$<?php echo $totalPrice ?></td>
                    </tr>
                    <tr>
                      <th>Total</th>
-                     <td>$450</td>
+                     <td>$<?php echo $totalPrice ?></td>
                    </tr>
                  </tbody>
                </table>

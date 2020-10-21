@@ -1,7 +1,10 @@
 <?php
+
   include('dsheader.php');
+
   include("Admin/config.php");  
 ?>
+
 
 
   <!-- catg header banner section -->
@@ -89,7 +92,7 @@
                           echo '<figure>';
                          
                           echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
-                          echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
+                          echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row["product_id"].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                           echo '<figcaption>';
                           echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
                           echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
@@ -123,7 +126,7 @@
                             echo '<li>';
                             echo '<figure>';
                             echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
-                            echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
+                            echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row["product_id"].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                             echo '<figcaption>';
                             echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
                             echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
@@ -155,7 +158,7 @@
                                 echo '<li>';
                                 echo '<figure>';
                                 echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
-                                echo '<a class="aa-add-card-btn addcart" href="product.php?id='.$row['product_id'].'" data-productid="'.$row['product_id'].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
+                                echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row["product_id"].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                                 echo '<figcaption>';
                                 echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
                                 echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
@@ -438,24 +441,40 @@
 
 <script>
       $(document).ready(function(){
-        $(".search").click(function(){
-          var id=$(this).data('id');
+          $(".search").click(function(){
+            var id=$(this).data('id');
+            $.ajax({
+              method:"POST",
+              url:"quick_view.php",
+              data: {id : id},
+              dataType:"json"
 
-          $.ajax({
+            })
+            .done(function( msg ) {
+              $('.qname').html(msg.product.name);
+              $('.qprice').html(msg.product.price);
+              $('.qdesc').html(msg.product.description);
+              $('.simpleLens-lens-image').html('<img src="Admin/uploads/'+msg.product.image+'" height="300" width="250" >')
+              $('.simpleLens-thumbnail-wrapper').html('<img src="Admin/uploads/'+msg.product.image+'" height="70" width="50" >')
+            });
+          });
+          
+          
+          $(".addcart").click(function(){
+            var productid=$(this).data('productid');
+            //alert("hey "+productid);
+            $.ajax({
             method:"POST",
-            url:"quick_view.php",
-            data: {id : id},
+            url:"cartprocess.php",
+            data: {productid : productid},
             dataType:"json"
 
           })
           .done(function( msg ) {
-            $('.qname').html(msg.product.name);
-            $('.qprice').html(msg.product.price);
-            $('.qdesc').html(msg.product.description);
-            $('.simpleLens-lens-image').html('<img src="Admin/uploads/'+msg.product.image+'" height="300" width="250" >')
-            $('.simpleLens-thumbnail-wrapper').html('<img src="Admin/uploads/'+msg.product.image+'" height="70" width="50" >')
+            // alert("hey" + msg);
+            $('.aa-cart-notify').html(msg);
+           
           });
-
         });
       });
 </script>
