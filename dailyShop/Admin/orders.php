@@ -3,46 +3,21 @@
 include('config.php');
 include('header.php');
 include('sidebar.php');
- 
-if(isset($_POST['submit'])){
-	$name=isset($_POST['name']) ? $_POST['name'] : '';
-	$price=isset($_POST['price'])?$_POST['price']:'';
-	//$imagename=isset($_POST['file'])?$_FILES['file']['name']:'';
-	$category=isset($_POST['category'])?$_POST['category']:'';
-	//$tags=$_POST['tags'];
-	$imagename=$_FILES['file']['name'];
-	$description=isset($_POST['description'])?$_POST['description']:'';
-	$filetempname=$_FILES['file']['tmp_name'];
-	$imagedestination='uploads/'.$imagename;
-	move_uploaded_file($filetempname,$imagedestination);
-	//accessing each tag
-	$tag=implode(",", $_POST['tags']);
-	
-	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`tags`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$tag.'","'.$description.'")';
-        if ($conn->query($sql) === TRUE) {
-			$message="New record created successfully";
-		}
-		else {
-            $errors=array('input'=>'form','msg'=>$conn->error);
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }        
-       
-	}			
 
-    if(isset($_GET['orderid']))
-    {
-        $id=$_GET['orderid'];
-        //echo $_GET['orderid'];
-    
-        $sql = "DELETE FROM orders WHERE `order_id`='$id'";
-    
-        if ($conn->query($sql) === TRUE) {
-        echo "Record deleted successfully";
-        } else {
-        echo "Error deleting record: " . $conn->error;
-        }
-    
+if(isset($_GET['orderid']))
+{
+    $id=$_GET['orderid'];
+    //echo $_GET['orderid'];
+
+    $sql = "DELETE FROM orders WHERE `order_id`='$id'";
+
+    if ($conn->query($sql) === TRUE) {
+    echo "Record deleted successfully";
+    } else {
+    echo "Error deleting record: " . $conn->error;
     }
+
+}
 
 ?>
 		<div id="main-content"> <!-- Main Content Section with everything -->

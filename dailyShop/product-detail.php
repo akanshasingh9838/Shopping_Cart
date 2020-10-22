@@ -2,11 +2,11 @@
   include('dsheader.php');
   include("Admin/config.php");
 
-  if(isset($_GET['id']))
+  if(isset($_GET['detailid']))
   {
-    $id=$_GET['id'];
+    $detailid=$_GET['detailid'];
 
-    $sql="SELECT * FROM products WHERE product_id = '$id' ";
+    $sql="SELECT * FROM products WHERE product_id = '$detailid' ";
     $result=$conn->query($sql);
     if ($result->num_rows > 0) {
         // output data of each row
@@ -17,9 +17,11 @@
             $description=$row['description'];
             $category=$row['category'];
         }
-      } else {
-        echo "0 results";
-      }
+      } 
+    else
+    {
+      echo "0 results";
+    }
     }
 ?>
 

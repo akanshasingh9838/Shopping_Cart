@@ -2,13 +2,16 @@
     <div id="sidebar-wrapper"> <!-- Sidebar with logo and menu -->
         <?php
             $filename=basename($_SERVER['REQUEST_URI']);
-            //echo($filename);
-            $productmenu=array("products.php","categories.php","tags.php");
+            echo($filename);
+			$productmenu=array("products.php","categories.php","tags.php","colors.php");
+			$ordermenu=array("orders.php");
+			$usermenu=array("users.php");
+			
         ?>	
 			
             <h1 id="sidebar-title"><a href="#">Admin</a></h1>
 			<!-- Logo (221px wide) -->
-			<a href="#"><img id="logo" src="resources/images/logo.png" alt="Simpla Admin logo" /></a>
+			<a href="#"><img id="logo" src="resources/images/logo.png" alt="Simpl Admin logo" /></a>
 		  
 			<!-- Sidebar Profile links -->
 			<div id="profile-links">
@@ -33,23 +36,25 @@
                     <li><a href="products.php" class="<?php if($filename=='products.php'): ?>current<?php endif; ?>" >Manage Product</a></li> <!-- Add class "current" to sub menu items also -->
                         <li><a href="categories.php" class="<?php if($filename=='categories.php'): ?>current<?php endif; ?>">Manage Categories</a></li>
                         <li><a href="tags.php" class="<?php if($filename=='tags.php'): ?>current<?php endif; ?>">Manage Tags</a></li>
+						<li><a href="colors.php" class="<?php if($filename=='colors.php'): ?>current<?php endif; ?>">Manage Colors</a></li>
 					</ul>
 				</li>
 				
 				<li>
-					<a href="#" class="nav-top-item ">
+						<a href="#" class="nav-top-item <?php if(in_array($filename,$usermenu)): ?> current <?php endif; ?>">
 						Users
 					</a>
 					<ul>
-						<li><a class ="current" href="users.php">Manage Users</a></li>
+						<li><a href="users.php" class=" <?php if($filename=='users.php'):?> current <?php endif; ?>">Manage Users</a></li>
 					</ul>
 				</li>
+				
 				<li>
-					<a href="#" class="nav-top-item">
+					<a href="#" class="nav-top-item <?php if(in_array($filename,$ordermenu)):?> current <?php endif; ?>">
 						Orders
 					</a>
 					<ul>
-						<li><a href="orders.php">Manage Orders</a></li>
+						<li><a href="orders.php" class ="<?php if($filename=='orders.php'): ?> current <?php endif; ?>">Manage Orders</a></li>
 					</ul>
 				</li>
 				

@@ -1,11 +1,7 @@
 <?php
-
   include('dsheader.php');
-
   include("Admin/config.php");  
 ?>
-
-
 
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">
@@ -60,7 +56,8 @@
                <!-- start single product item -->
 
                <?php
-               if(isset($_GET['page'])){
+               if(isset($_GET['page']))
+               {
                  $page=$_GET['page'];
                }
                else
@@ -86,12 +83,10 @@
                     {
                         //echo("Data received");
                         while($row = $res->fetch_assoc())
-                         {
-  
+                         {  
                           echo '<li>';
-                          echo '<figure>';
-                         
-                          echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                          echo '<figure>';                         
+                          echo '<a class="aa-product-img" href="product-detail.php?detailid='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
                           echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row["product_id"].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                           echo '<figcaption>';
                           echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
@@ -104,7 +99,7 @@
                           echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>';
                           echo '<a href="#" class="" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal" ><span class="fa fa-search search" data-id="'.$row["product_id"].'"></span></a>';                           
                           echo '</div>';
-                        //product badge
+                          //product badge
                           echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
                           echo '</li>';        
                           }
@@ -125,7 +120,7 @@
   
                             echo '<li>';
                             echo '<figure>';
-                            echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                            echo '<a class="aa-product-img" href="product-detail.php?detailid='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
                             echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row["product_id"].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                             echo '<figcaption>';
                             echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
@@ -157,7 +152,7 @@
 
                                 echo '<li>';
                                 echo '<figure>';
-                                echo '<a class="aa-product-img" href="product-detail.php?id='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                                echo '<a class="aa-product-img" href="product-detail.php?detailid='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
                                 echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row["product_id"].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
                                 echo '<figcaption>';
                                 echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
@@ -311,6 +306,7 @@
           <aside class="aa-sidebar">
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
+              <a href="product.php" style="color:red;margin-top:15px; font-size:25px;">Clear All Filters</a>
               <h3>Category</h3>
               <ul class="aa-catg-nav">
                 <?php
