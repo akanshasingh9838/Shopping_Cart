@@ -17,8 +17,9 @@ if(isset($_POST['submit'])){
 	move_uploaded_file($filetempname,$imagedestination);
 	//accessing each tag
 	$tag=implode(",", $_POST['tags']);
-	
-	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`tags`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$tag.'","'.$description.'")';
+	$color=implode(",",$_POST['color']);
+
+	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`color`,`tags`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$color.'","'.$tag.'","'.$description.'")';
         if ($conn->query($sql) === TRUE) {
 			$message="New record created successfully";
 		}
@@ -99,6 +100,7 @@ if(isset($_GET['product_id']))
 								   <th>Product-ID</th>
 								   <th>Price</th>
 								   <th>Category</th>
+								   <th>Colors</th>
 								   <th>Tags</th>
 								   <th>Description</th>
 								   <th>Action</th>
@@ -146,6 +148,7 @@ if(isset($_GET['product_id']))
 											echo "<td>".$row["product_id"]."</td>";
 											echo "<td>".$row["price"]."</td>";
 											echo "<td>".$row["category"]."</td>";
+											echo "<td>".$row["color"]."</td>";
 											echo "<td>".$row["tags"]."</td>";
 											echo "<td>".$row["description"]."</td>";
 											echo "<td>";
@@ -204,6 +207,7 @@ if(isset($_GET['product_id']))
 									?>
 									</select> 
 								</p>
+
 								<p>	
 									<label>Tags</label>         		
 									<?php																				
@@ -214,6 +218,25 @@ if(isset($_GET['product_id']))
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
 											echo '<input type="checkbox" name="tags[]" value="'.$row["tag_name"].'"/> '.$row["tag_name"];
+											
+										}
+										} else {
+										echo "0 results, Manage tags first";
+										}																		
+									?>
+									
+								</p>
+
+								<p>	
+									<label>Colors</label>         		
+									<?php																				
+										$color_sql = "SELECT `color` FROM colors";
+										$result = $conn->query($color_sql);
+										
+										if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											echo '<input type="checkbox" name="color[]" value="'.$row["color"].'"/> '.$row["color"];
 											
 										}
 										} else {

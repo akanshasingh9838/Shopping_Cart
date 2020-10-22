@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
 
 if(isset($_GET['product_id'])){
 	$id=$_GET['product_id'];   
-    $sql = "DELETE FROM colors WHERE `product_id`= '$product_id'";
+    $sql = "DELETE FROM colors WHERE `product_id`= '$id'";
     if ($conn->query($sql) === TRUE) {
     echo "Record deleted successfully";
     } else {
@@ -143,12 +143,27 @@ if(isset($_GET['product_id'])){
 						<form action="" method="POST" enctype="multipart/form-data">
 						
 							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
-							
-								<p>
-									<label>Product ID</label>
-									<input class="text-input small-input" type="text" id="product_id" name="product_id" /> <span class="input-notification success png_bg">Successful message</span> <!-- Classes for input-notification: success, error, information, attention -->
-									<br /><small>Enter your product id</small>
+                                
+                                <p>	
+                                    <label>Product ID</label>         
+                                    <select name="product_id" class="small-input">		
+									<?php																				
+										$sql = "SELECT `product_id` FROM products";
+										$result = $conn->query($sql);
+										
+										if ($result->num_rows > 0) {
+										  // output data of each row
+										  while($row = $result->fetch_assoc()) {
+											echo '<option value="'.$row["product_id"].'">'.$row["product_id"].'</option>';
+											
+										  }
+										} else {
+										  echo "0 results, Manage categories first";
+										}																		
+									?>
+									</select> 
 								</p>
+								
 								
 								<p>
 									<label>Color</label>
