@@ -49,7 +49,7 @@
 						Orders
 					</a>
 					<ul>
-						<li><a href="#">Manage Orders</a></li>
+						<li><a href="orders.php">Manage Orders</a></li>
 					</ul>
 				</li>
 				
