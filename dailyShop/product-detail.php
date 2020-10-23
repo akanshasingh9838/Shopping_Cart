@@ -14,8 +14,9 @@
             $name=$row['name'];
             $price=$row['price'];
             $image=$row['image'];
-            $description=$row['description'];
+            $short_description=$row['short_description'];
             $category=$row['category'];
+            $long_description=$row['long_description'];
         }
       } 
     else
@@ -80,7 +81,7 @@
                       <span class="aa-product-view-price"><?php echo "Rs.".$price; ?></span>
                       <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
                     </div>
-                    <p><?php echo $description; ?></p>
+                    <p><?php echo $short_description; ?></p>
                     <h4>Size</h4>
                     <div class="aa-prod-view-size">
                       <a href="#">S</a>
@@ -129,7 +130,8 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div class="tab-pane fade in active" id="description">
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                  <?php echo $long_description; ?>
+                  <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                   <ul>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, culpa!</li>
                     <li>Lorem ipsum dolor sit amet.</li>
@@ -138,7 +140,7 @@
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, modi!</li>
                   </ul>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, iusto earum voluptates autem esse molestiae ipsam, atque quam amet similique ducimus aliquid voluptate perferendis, distinctio!</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p> -->
                 </div>
                 <div class="tab-pane fade " id="review">
                  <div class="aa-product-review-area">

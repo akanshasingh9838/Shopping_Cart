@@ -91,7 +91,7 @@
                           echo '<figcaption>';
                           echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
                           echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
-                          echo '<p class="aa-product-descrip">'.$row["description"].'</p>';
+                          echo '<p class="aa-product-descrip">'.$row["short_description"].'</p>';
                           echo ' </figcaption>';
                           echo ' </figure> ';
                           echo '<div class="aa-product-hvr-content">';
@@ -125,7 +125,7 @@
                             echo '<figcaption>';
                             echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
                             echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
-                            echo '<p class="aa-product-descrip">'.$row["description"].'</p>';
+                            echo '<p class="aa-product-descrip">'.$row["short_description"].'</p>';
                             echo ' </figcaption>';
                             echo ' </figure> ';
                             echo '<div class="aa-product-hvr-content">';
@@ -140,6 +140,39 @@
                       }
                   }
                   
+                  //This work when we choose color
+                  else if (isset($_GET['color']))
+                  {
+                    $color=$_GET['color'];
+                    $sql="SELECT * FROM products WHERE `color` LIKE '%$color%' limit $start,$per_page";
+                    $res=mysqli_query($conn,$sql);
+                    if(mysqli_num_rows($res)>0)
+                    {
+                        //echo("Data received");
+                        while($row = $res->fetch_assoc())
+                         {
+  
+                            echo '<li>';
+                            echo '<figure>';
+                            echo '<a class="aa-product-img" href="product-detail.php?detailid='.$row["product_id"].'"><img src="Admin/uploads/'.$row["image"].'" height=300 width=250 alt="'.$row["name"].' img"></a>';
+                            echo '<a class="aa-add-card-btn addcart" href="#" data-productid="'.$row["product_id"].'"><span class="fa fa-shopping-cart"></span>Add To Cart</a>';
+                            echo '<figcaption>';
+                            echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
+                            echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
+                            echo '<p class="aa-product-descrip">'.$row["short_description"].'</p>';
+                            echo ' </figcaption>';
+                            echo ' </figure> ';
+                            echo '<div class="aa-product-hvr-content">';
+                            echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>';
+                            echo '<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>';
+                            echo '<a href="#" class="" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal" ><span class="fa fa-search search" data-id="'.$row["product_id"].'"></span></a>';                           
+                            echo '</div>';
+                          //product badge
+                            echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
+                            echo '</li>';        
+                          }
+                      }
+                  }
                   // This work when we do not choose any filter
                   else
                   {
@@ -157,7 +190,7 @@
                                 echo '<figcaption>';
                                 echo '<h4 class="aa-product-title"><a href="#">'.$row["name"].'</a></h4>';
                                 echo '<span class="aa-product-price">RS.'.$row["price"].'</span><span class="aa-product-price"></span>'; //<del>$65.50</del>
-                                echo '<p class="aa-product-descrip">'.$row["description"].'</p>';
+                                echo '<p class="aa-product-descrip">'.$row["short_description"].'</p>';
                                 echo ' </figcaption>';
                                 echo ' </figure> ';
                                 echo '<div class="aa-product-hvr-content">';
@@ -253,12 +286,12 @@
                                 </select>
                               </form>
                               <p class="aa-prod-category">
-                                Category: <a href="#">Polo T-Shirt</a>
+                                Category: <a href="#" class="qcategory"></a>
                               </p>
                             </div>
                             <div class="aa-prod-view-bottom">
                               <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                              <a href="#" class="aa-add-to-cart-btn">View Details</a>
+                              <a href="product-detail.php" class="aa-add-to-cart-btn">View Details</a>
                             </div>
                           </div>
                         </div>
@@ -351,9 +384,17 @@
             </div>
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
-              <h3>Shop By Color</h3>
+              <h3>Shop By Color</h3>  <!-- green,yellow,pink,purple,blue,orange,gray,black,white,cyan,olive,orchad -->
               <div class="aa-color-tag">
-                <a class="aa-color-green" href="#"></a>
+                  <?php
+                    $sql="SELECT DISTINCT(color) FROM colors ORDER BY color";
+                    $result = $conn->query($sql);
+                    while($row=$result->fetch_assoc()){
+                      // echo '<a href="product.php?tag='.$row["tag_name"].'">'.$row["tag_name"].'</a>';
+                      echo '<a href="product.php?color='.$row["color"].'" class="aa-color-'.$row["color"].'"></a>';
+                    }
+                  ?>
+                <!-- <a class="aa-color-green" href="#"></a>
                 <a class="aa-color-yellow" href="#"></a>
                 <a class="aa-color-pink" href="#"></a>
                 <a class="aa-color-purple" href="#"></a>
@@ -364,7 +405,7 @@
                 <a class="aa-color-white" href="#"></a>
                 <a class="aa-color-cyan" href="#"></a>
                 <a class="aa-color-olive" href="#"></a>
-                <a class="aa-color-orchid" href="#"></a>
+                <a class="aa-color-orchid" href="#"></a> -->
               </div>                            
             </div>
             <!-- single sidebar -->
@@ -449,7 +490,8 @@
             .done(function( msg ) {
               $('.qname').html(msg.product.name);
               $('.qprice').html(msg.product.price);
-              $('.qdesc').html(msg.product.description);
+              $('.qdesc').html(msg.product.short_description);
+              $('.qcategory').html(msg.product.category);
               $('.simpleLens-lens-image').html('<img src="Admin/uploads/'+msg.product.image+'" height="300" width="250" >')
               $('.simpleLens-thumbnail-wrapper').html('<img src="Admin/uploads/'+msg.product.image+'" height="70" width="50" >')
             });

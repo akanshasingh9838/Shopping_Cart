@@ -11,7 +11,8 @@ if(isset($_POST['submit'])){
 	$category=isset($_POST['category'])?$_POST['category']:'';
 	//$tags=$_POST['tags'];
 	$imagename=$_FILES['file']['name'];
-	$description=isset($_POST['description'])?$_POST['description']:'';
+	$short_description=isset($_POST['short_description'])?$_POST['short_description']:'';
+	$long_description=isset($_POST['long_description'])?$_POST['long_description']:'';
 	$filetempname=$_FILES['file']['tmp_name'];
 	$imagedestination='uploads/'.$imagename;
 	move_uploaded_file($filetempname,$imagedestination);
@@ -19,7 +20,7 @@ if(isset($_POST['submit'])){
 	$tag=implode(",", $_POST['tags']);
 	$color=implode(",",$_POST['color']);
 
-	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`color`,`tags`,`description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$color.'","'.$tag.'","'.$description.'")';
+	$sql='INSERT INTO products(`name`,`price`,`image`,`category`,`color`,`tags`,`short_description`,`long_description`)VALUES("'.$name.'","'.$price.'","'.$imagename.'","'.$category.'","'.$color.'","'.$tag.'","'.$short_description.'","'.$long_description.'")';
         if ($conn->query($sql) === TRUE) {
 			$message="New record created successfully";
 		}
@@ -102,7 +103,8 @@ if(isset($_GET['product_id']))
 								   <th>Category</th>
 								   <th>Colors</th>
 								   <th>Tags</th>
-								   <th>Description</th>
+								   <th>Short Description</th>
+								   <th>Long Description</th>
 								   <th>Action</th>
 								</tr>
 								
@@ -150,9 +152,10 @@ if(isset($_GET['product_id']))
 											echo "<td>".$row["category"]."</td>";
 											echo "<td>".$row["color"]."</td>";
 											echo "<td>".$row["tags"]."</td>";
-											echo "<td>".$row["description"]."</td>";
+											echo "<td>".$row["short_description"]."</td>";
+											echo "<td>".$row["long_description"]."</td>";
 											echo "<td>";
-											echo '<a href="updateproduct.php?name='.$row["name"].'&price='.$row["price"].'&category='.$row["category"].'&description='.$row["description"].'&product_id='.$row["product_id"].'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>';
+											echo '<a href="updateproduct.php?name='.$row["name"].'&price='.$row["price"].'&category='.$row["category"].'&short_description='.$row["short_description"].'&product_id='.$row["product_id"].'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>';
 										 	echo '<a href="products.php?product_id='.$row["product_id"].'" onclick="return checkdelete()" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a>';
 											echo "</td></tr>";
 										}
@@ -247,8 +250,13 @@ if(isset($_GET['product_id']))
 								</p>
 									
 								<p>
-									<label>Description</label>
-									<textarea class="text-input textarea wysiwyg" id="description" name="description" cols="79" rows="15"></textarea>
+									<label>Short Description</label>
+									<textarea class="text-input textarea wysiwyg" id="short_description" name="short_description" cols="79" rows="15"></textarea>
+								</p>
+
+								<p>
+									<label>Long Description</label>
+									<textarea class="text-input textarea wysiwyg" id="long_description" name="long_description" cols="79" rows="15"></textarea>
 								</p>
 								
 								<p>

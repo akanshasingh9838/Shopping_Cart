@@ -6,13 +6,13 @@ $id=$_GET['product_id'];
 if(isset($_POST['submit'])){
     $name=isset($_POST['name']) ? $_POST['name'] : '';
 	$price=isset($_POST['price'])?$_POST['price']:'';
-    $description=isset($_POST['description'])?$_POST['description']:'';
+    $short_description=isset($_POST['short_description'])?$_POST['short_description']:'';
     $category=$_POST['category'];
     $imagename=$_FILES['file']['name'];
 	$filetempname=$_FILES['file']['tmp_name'];
 	$imagedestination='uploads/'.$imagename;
 	move_uploaded_file($filetempname,$imagedestination);
-    $sql = "UPDATE products SET `name`='$name' , `price` ='$price' , `description`='$description',`image`='$imagename',`category`='$category' WHERE product_id='$id'";
+    $sql = "UPDATE products SET `name`='$name' , `price` ='$price' , `short_description`='$short_description',`image`='$imagename',`category`='$category' WHERE product_id='$id'";
    
     if ($conn->query($sql) === TRUE) {
     echo "Record updated successfully";
@@ -104,8 +104,8 @@ if(isset($_POST['submit'])){
 								</p> -->
 																
 								<p>
-									<label>Description</label>
-									<textarea class="text-input textarea wysiwyg" id="description" name="description" cols="79" rows="15" ><?php echo $_GET['description'];?></textarea>
+									<label>Short Description</label>
+									<textarea class="text-input textarea wysiwyg" id="short_description" name="short_description" cols="79" rows="15" ><?php echo $_GET['short_description'];?></textarea>
 								</p>
 								
 								<p>
