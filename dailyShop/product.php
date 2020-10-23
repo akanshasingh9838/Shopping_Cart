@@ -202,16 +202,13 @@
                                 echo '<span class="aa-badge aa-sale" href="#">SALE!</span>';
                                 echo '</li>';        
                               }
-
                         }
                         else
                         {
                           header("Location:product.php?page=1");
                         }
+
                     }
-
-
-
             }
                    
                ?>
@@ -291,13 +288,11 @@
                             </div>
                             <div class="aa-prod-view-bottom">
                               <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                              <a href="product-detail.php" class="aa-add-to-cart-btn">View Details</a>
+                              <a href="" class="aa-add-to-cart-btn qid">View Details</a>
                             </div>
                           </div>
                         </div>
                       </div>
-
-
 
                     </div>                        
                   </div><!-- /.modal-content -->
@@ -488,6 +483,7 @@
 
             })
             .done(function( msg ) {
+              $('.qid').attr('href','product-detail.php?detailid='+msg.product.product_id+'');
               $('.qname').html(msg.product.name);
               $('.qprice').html(msg.product.price);
               $('.qdesc').html(msg.product.short_description);

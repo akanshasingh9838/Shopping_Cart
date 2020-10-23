@@ -25,7 +25,7 @@ if(isset($_GET['order']))
     {
       $id=$value['id2'];
       $name=$value['name2'];
-      $price=$value['price2']*$value['quantity2'];
+      $price+=$value['price2']*$value['quantity2'];
       array_push($name_array,$name);
       array_push($productid_array,$id);
       
@@ -97,6 +97,7 @@ if(isset($_GET['order']))
                       </tr>
                     </thead>
                     <tbody>
+                      <?php if(isset($_SESSION['cart'])) { ?>
                       <?php $totalPrice; ?>
                       <?php foreach ($_SESSION['cart'] as $key=>$value) : ?>
                       <tr>
@@ -107,8 +108,13 @@ if(isset($_GET['order']))
                         <td><input class="aa-cart-quantity" type="number" value="<?php echo $value['quantity2']; ?>"></td>
                         <td>$<?php echo $value['quantity2']*$value['price2']; ?></td>
                       </tr>
-                      <?php $totalPrice += $value['price2']*$value['quantity2'] ?>
                       <?php endforeach; ?>
+                      <?php } else {
+                      
+                        $totalPrice += $value['price2']*$value['quantity2'] ;
+                      }
+                      ?>
+                      
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
                           <div class="aa-cart-coupon">
@@ -118,6 +124,7 @@ if(isset($_GET['order']))
                           <input class="aa-cart-view-btn" type="submit" value="Update Cart">
                         </td>
                       </tr>
+                     
                       </tbody>
                   </table>
                 </div>
