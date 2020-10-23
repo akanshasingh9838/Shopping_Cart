@@ -109,8 +109,10 @@ if(isset($_GET['order']))
                         <td>$<?php echo $value['quantity2']*$value['price2']; ?></td>
                       </tr>
                       <?php endforeach; ?>
-                      <?php } else {
-                      
+                      <?php 
+                      } 
+                      else 
+                      {
                         $totalPrice += $value['price2']*$value['quantity2'] ;
                       }
                       ?>
